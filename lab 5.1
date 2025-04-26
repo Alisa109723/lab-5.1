@@ -1,0 +1,47 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+void sortDescending(double arr[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (arr[j] < arr[j + 1]) {
+                double temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+}
+
+int main(void) {
+    const int colCount = 10; // Кількість елементів масиву
+    const double Low = 1.0, High = 100.0; // Діапазон значень
+    srand(time(0)); // Ініціалізація генератора випадкових чисел
+
+    double a[colCount];
+
+    // Генерація випадкових дійсних чисел у заданому діапазоні
+    for (int i = 0; i < colCount; i++) {
+        a[i] = Low + (double)rand() / RAND_MAX * (High - Low);
+    }
+
+    // Виведення елементів масиву
+    for (int i = 0; i < colCount; i++) {
+        printf("a[%d] = %.2lf\t", i, a[i]);
+    }
+    printf("\n");
+
+    // Сортування масиву у спадному порядку
+    sortDescending(a, colCount);
+
+    // Обчислення суми трьох найбільших чисел
+    if (colCount >= 3) {
+        double sum_of_largest = a[0] + a[1] + a[2];
+        printf("Сума трьох найбільших чисел: %.2lf\n", sum_of_largest);
+    } else {
+        printf("Недостатньо елементів для обчислення суми трьох найбільших чисел.\n");
+    }
+
+    return 0;
+}
