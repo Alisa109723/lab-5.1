@@ -1,47 +1,64 @@
 #include <stdio.h>
 
-int main() {
-    int n;
-    
-    // Запит на введення кількості елементів масиву
-    printf("Введіть кількість елементів масиву: ");
-    scanf("%d", &n);
-    
+void findThreeLargestSum(double arr[], int n) {
     if (n < 3) {
-        printf("Кількість елементів має бути не менше 3.\n");
-        return 1; // Завершити програму з помилкою
+        printf("Недостатньо елементів у масиві для обчислення суми трьох найбільших чисел.\n");
+        return;
     }
 
-    double a[n]; // Масив для зберігання дійсних чисел
+    double first, second, third;
+    first = second = third = -1.0 / 0.0; // Мінус безкінечність
 
-    // Введення елементів масиву
-    printf("Введіть %d дійсних чисел:\n", n);
     for (int i = 0; i < n; i++) {
-        scanf("%lf", &a[i]);
-    }
-
-    // Змінні для зберігання трьох найбільших чисел
-    double first = a[0], second = a[0], third = a[0];
-
-    // Знаходження трьох найбільших чисел
-    for (int i = 0; i < n; i++) {
-        if (a[i] > first) {
+        if (arr[i] > first) {
             third = second;
             second = first;
-            first = a[i];
-        } else if (a[i] > second) {
+            first = arr[i];
+        } else if (arr[i] > second) {
             third = second;
-            second = a[i];
-        } else if (a[i] > third) {
-            third = a[i];
+            second = arr[i];
+        } else if (arr[i] > third) {
+            third = arr[i];
         }
     }
 
-    // Обчислення суми трьох найбільших чисел
     double sum = first + second + third;
+    printf("Сума трьох найбільших чисел: %.2f\n", sum);
+}
 
-    // Виведення результату
-    printf("Сума трьох найбільших чисел: %.2lf\n", sum);
+int main() {
+    int n;
+    
+    printf("Введіть кількість елементів масиву: ");
+    scanf("%d", &n);
+
+    double arr[n];
+
+    printf("Введіть %d дійсних чисел:\n", n);
+    for (int i = 0; i < n; i++) {
+        printf("a[%d]: ", i);
+        scanf("%lf", &arr[i]);
+    }
+
+    int choice;
+    do {
+        printf("\nМеню:\n");
+        printf("1. Знайти суму трьох найбільших чисел\n");
+        printf("2. Вийти\n");
+        printf("Виберіть опцію: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                findThreeLargestSum(arr, n);
+                break;
+            case 2:
+                printf("Вихід з програми.\n");
+                break;
+            default:
+                printf("Невірний вибір. Спробуйте ще раз.\n");
+        }
+    } while (choice != 2);
 
     return 0;
 }
